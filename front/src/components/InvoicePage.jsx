@@ -95,7 +95,7 @@ export default function InvoicePage(props) {
         <thead className="thead-light">
           <tr>
             <th>{"#"}</th>
-            <th>{"Item"}</th>
+            <th>{"Name"}</th>
             <th>{"Description"}</th>
             <th>{"Qty"}</th>
             <th>{"Rate (With Tax in ₹)"}</th>
@@ -106,10 +106,15 @@ export default function InvoicePage(props) {
         <tbody>
           <ItemList onRowUpdate={onRowUpdate} inputItems={InvoiceData.items} />
         </tbody>
+        <caption className="text font-italic">
+          {"*Items row should have all the values filled up"}
+        </caption>
       </table>
       <Divider />
       <div className="d-flex justify-content-end flex-column mt-5">
-        <h3 className="align-self-end">Total ₹: {FinalInvoiceData.total}</h3>
+        <h3 className="align-self-end font-weight-bold">
+          Total ₹: {FinalInvoiceData.total}
+        </h3>
         <button
           className="align-self-end btn btn-info"
           onClick={generateInvoice}

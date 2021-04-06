@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 // create a schema
 const InvoiceSchema = new Schema({
-    invoice_no: String,
+    invoice_no: { type: String, unique: true },
     items: [{
         qty: Number,
         rate: Number,

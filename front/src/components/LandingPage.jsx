@@ -23,7 +23,7 @@ export default function LandingPage() {
       <div className="d-flex justify-content-between mb-3">
         {Invoices.length > 0 ? (
           <>
-            <h4 className="mb-4">{"List of Invoices"}</h4>
+            <h4 className="mb-4">{"My Invoices"}</h4>
             <Link
               className="justify-content-center align-self-center"
               to="/invoice"
