@@ -22,9 +22,17 @@ export default function InvoicePage(props) {
     if (query.get('invoice_no')) {
       axios.get(`http://localhost:8080/${query.get('invoice_no')}`).then(({ data }) => {
         console.log("GOT Items", data.items);
+
+        var _items = data.items.map(item => ({
+          item: item.item,
+          description: item.description,
+          qty: item.qty,
+          rate: item.rate
+        }))
+        console.log("_items", _items);
         setInvoiceData({
           invoice_no: data.invoice_no,
-          items: data.items,
+          items: _items,
           total: data.total
         })
       });
@@ -66,7 +74,7 @@ export default function InvoicePage(props) {
           </tr>
         </thead>
         <tbody>
-          <ItemList onRowUpdate={onRowUpdate} inputItems={[{ item: "sa", description: "12", qty: 0, rate: 0 }]} />
+          <ItemList onRowUpdate={onRowUpdate} inputItems={[{ item: "", description: "", qty: 0, rate: 0 }, ...InvoiceData.items]} />
         </tbody>
       </table>
       <h3>Total: {InvoiceData.total}</h3>
