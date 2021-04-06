@@ -40,11 +40,15 @@ export default function ItemList({ onRowUpdate, inputItems }) {
   return (
     <>
       {inputList.map((x, i) => (
-        <tr key={i}>
+        <tr
+          key={i}
+          className={inputList.length - 1 === i ? "" : "table-active"}
+        >
           <td>{i + 1}</td>
           <td>
             <input
               name="item"
+              className="form-control"
               placeholder="Item Name"
               value={x.item}
               onChange={(e) => handleInputChange(e, i)}
@@ -52,7 +56,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
           </td>
           <td>
             <input
-              className="ml10"
+              className="form-control"
               name="description"
               placeholder="Item Description"
               value={x.description}
@@ -61,7 +65,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
           </td>
           <td>
             <input
-              className="ml10"
+              className="form-control"
               name="qty"
               min={1}
               type="Number"
@@ -72,7 +76,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
           </td>
           <td>
             <input
-              className="ml10"
+              className="form-control"
               type="Number"
               min={1}
               name="rate"
@@ -81,21 +85,21 @@ export default function ItemList({ onRowUpdate, inputItems }) {
               onChange={(e) => handleInputChange(e, i)}
             />
           </td>
-          <td className="flex-column">
+          <td>
             {inputList.length > 1 ? (
               <button
-                className="btn btn-danger"
+                className="btn btn-danger btn-sm"
                 onClick={() => handleRemoveClick(i)}
               >
                 Remove
               </button>
             ) : (
-              <></>
+              <>{"-"}</>
             )}
           </td>
           <td>
             {inputList.length - 1 === i ? (
-              <button className="btn btn-info" onClick={handleAddClick}>
+              <button className="btn btn-info btn-sm" onClick={handleAddClick}>
                 Add
               </button>
             ) : (

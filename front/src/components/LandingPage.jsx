@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Datatable from "./Datatable";
 import axios from "axios";
+import Layout from "./Layout";
 export default function LandingPage() {
   const [Invoices, setInvoices] = useState([]);
 
@@ -18,10 +19,36 @@ export default function LandingPage() {
   }
 
   return (
-    <>
-      <div className="display-4 mb-4">List of Invoices</div>
-      <Datatable invoices={Invoices} onDelete={deleteInvoice} />
-      <Link to="/invoice">Create A new Invoice</Link>
-    </>
+    <Layout>
+      <div className="d-flex justify-content-between mb-3">
+        {Invoices.length > 0 ? (
+          <>
+            <h4 className="mb-4">{"List of Invoices"}</h4>
+            <Link
+              className="justify-content-center align-self-center"
+              to="/invoice"
+            >
+              {"+ Create A new Invoice"}
+            </Link>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
+      {Invoices.length > 0 ? (
+        <Datatable invoices={Invoices} onDelete={deleteInvoice} />
+      ) : (
+        <div className="flex-column d-flex justify-content-center align-items-center">
+          {"No invoices found 😔"}
+          <br />
+          <Link
+            className="mt-2 justify-content-center align-self-center"
+            to="/invoice"
+          >
+            {"+ Create A new Invoice"}
+          </Link>
+        </div>
+      )}
+    </Layout>
   );
 }

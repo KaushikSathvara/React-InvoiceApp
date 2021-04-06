@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import Divider from "./Divider";
+import Layout from "./Layout";
 
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
@@ -11,12 +12,12 @@ export default function InvoicePage(props) {
     items: [],
     total: 0,
   });
-
+  const [isLoading, setisLoading] = useState(false);
+  const [Items, setItems] = useState([]);
   const [FinalInvoiceData, setFinalInvoiceData] = useState({});
 
   const [isNew, setisNew] = useState(true);
   const histroy = useHistory();
-
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
@@ -38,58 +39,68 @@ export default function InvoicePage(props) {
   }, []);
 
   async function generateInvoice() {
-    console.log(`Generating Invoice for ${JSON.stringify(FinalInvoiceData)}`);
-    if (!isNew) {
-      const res = await axios
-        .patch(
-          `http://localhost:8080/${FinalInvoiceData.invoice_no}`,
-          FinalInvoiceData
-        )
-        .then((res) => {
-          console.log(res);
-        });
-    } else {
-      const res = await axios.post("http://localhost:8080/", FinalInvoiceData);
+    // Checking if items have valid fields values or not
+    if (Items.length > 0) {
+      setisLoading(true);
+      if (!isNew) {
+        await axios
+          .patch(`http://localhost:8080/${FinalInvoiceData.invoice_no}`, {
+            ...FinalInvoiceData,
+            items: Items,
+          })
+          .then((res) => {
+            setisLoading(false);
+            histroy.push("/");
+          });
+      } else {
+        await axios
+          .post("http://localhost:8080/", {
+            ...FinalInvoiceData,
+            items: Items,
+          })
+          .then((_) => {
+            setisLoading(false);
+            histroy.push("/");
+          });
+      }
     }
-    histroy.push("/");
   }
 
   function calculateTotal(items) {
     var _total = 0;
-    items.forEach((i) => (_total += parseInt(i.rate)));
-    console.log("_total:", _total);
+    items.forEach((i) => (_total += parseInt(i.rate) * parseInt(i.qty)));
     return _total;
   }
 
   function onRowUpdate(items) {
     var _total = calculateTotal(items);
-    // setInvoiceData({ ...InvoiceData, items, total: _total });
+    var _items = items.filter((item) => {
+      if (item.qty && item.item && item.rate && item.description) {
+        return item;
+      }
+    });
+    setItems(_items);
     setFinalInvoiceData({ ...InvoiceData, items, total: _total });
   }
 
   return (
-    <div>
-      <h3 className="mb-4">
-        {!isNew ? (
-          <>
-            Update Invoice<br></br>
-            {`#${InvoiceData.invoice_no}`}
-          </>
-        ) : (
-          <>
-            Create a new Invoice<br></br>
-            {`#${InvoiceData.invoice_no}`}
-          </>
-        )}
-      </h3>
+    <Layout>
+      <div className="d-flex justify-content-between">
+        <h4 className="mb-4">
+          {!isNew ? "Update Invoice" : "Create a new Invoice"}
+        </h4>
+        <h5 className="text-muted">{`Invoice ID: ${InvoiceData.invoice_no}`}</h5>
+      </div>
       <table className="table table-borderless">
-        <thead className="thead-dark">
+        <thead className="thead-light">
           <tr>
-            <td>Sr No</td>
-            <td>Item</td>
-            <td>Description</td>
-            <td>Qty</td>
-            <td>Tax(Rate)</td>
+            <th>{"#"}</th>
+            <th>{"Item"}</th>
+            <th>{"Description"}</th>
+            <th>{"Qty"}</th>
+            <th>{"Rate (With Tax in ₹)"}</th>
+            <th>{"Remove"}</th>
+            <th>{"Add"}</th>
           </tr>
         </thead>
         <tbody>
@@ -97,15 +108,19 @@ export default function InvoicePage(props) {
         </tbody>
       </table>
       <Divider />
-      <div className="d-flex justify-content-end">
-        <h3 className="align-self-end">Total: {InvoiceData.total}</h3>
+      <div className="d-flex justify-content-end flex-column mt-5">
+        <h3 className="align-self-end">Total ₹: {FinalInvoiceData.total}</h3>
+        <button
+          className="align-self-end btn btn-info"
+          onClick={generateInvoice}
+          disabled={isLoading || !Items.length > 0}
+        >
+          {isNew ? "Generate Invoice" : "Update Invoice"}
+        </button>
       </div>
-      <button className="btn btn-lg btn-info" onClick={generateInvoice}>
-        {isNew ? "Generate Invoice" : "Update Invoice"}
-      </button>
       <div className="mt-4">
-        <Link to="/">Back to Dashboard</Link>
+        <Link to="/">{"Back to Dashboard"}</Link>
       </div>
-    </div>
+    </Layout>
   );
 }

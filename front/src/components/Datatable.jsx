@@ -6,28 +6,28 @@ export default function Datatable({ invoices, onDelete }) {
 
   function editInvoice(invoiceId) {
     history.push(`/invoice?invoice_no=${invoiceId}`);
-    console.log(`Edit ${invoiceId}`);
   }
 
   function deleteInvoice(invoiceId) {
     onDelete(invoiceId);
-    console.log(`Delete ${invoiceId}`);
   }
 
   return (
     <div>
-      <table className="table table-striped table-hover">
-        <thead>
+      <table className="table table-striped">
+        <thead className="thead-light">
           <tr>
+            <th>#</th>
             <th>Invoice Number</th>
-            <th>Total</th>
+            <th>Invoice Total</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {invoices.map((invoice) => (
+          {invoices.map((invoice, i) => (
             <tr key={invoice.invoice_no}>
+              <td>{i + 1}</td>
               <td>{invoice.invoice_no}</td>
               <td>{invoice.total}</td>
               <td>
