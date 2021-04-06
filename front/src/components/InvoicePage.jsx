@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ItemList from "./ItemList";
 import { v4 as uuidv4 } from "uuid";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
 export default function InvoicePage(props) {
@@ -68,11 +68,19 @@ export default function InvoicePage(props) {
 
   return (
     <div>
-      <h4 className="display-4 mb-4">
-        {!isNew
-          ? `Inovoice #${InvoiceData.invoice_no}`
-          : "Create a new Invoice"}
-      </h4>
+      <h3 className="mb-4">
+        {!isNew ? (
+          <>
+            Update Invoice<br></br>
+            {`#${InvoiceData.invoice_no}`}
+          </>
+        ) : (
+          <>
+            Create a new Invoice<br></br>
+            {`#${InvoiceData.invoice_no}`}
+          </>
+        )}
+      </h3>
       <table className="table table-borderless">
         <thead>
           <tr>

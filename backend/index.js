@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require('body-parser');
 const InvoiceModel = require("./models/invoice");
-const { checkInvoiceExisted } = require("./utils/helper");
 
-mongoose.connect('mongodb+srv://kaushik:6xX2zkJdeBjyKQk@cluster0.4bpsk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true });
+const DB_URL = "mongodb+srv://kaushik:6xX2zkJdeBjyKQk@cluster0.4bpsk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
+mongoose.connect(DB_URL, { useNewUrlParser: true });
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -17,39 +18,57 @@ app.use(cors({
 }))
 
 
-app.get('/', async (req, res, next) => {
-    const invoices = await InvoiceModel.find()
-    res.status(200).send(invoices)
+app.get('/', async (req, res) => {
+    try {
+        const invoices = await InvoiceModel.find()
+        res.status(200).send(invoices)
+    } catch (error) {
+        res.status(400).send("Something went wrong")
+    }
 });
 
-app.post('/', async (req, res, next) => {
-    const isInvoiceExisted = await checkInvoiceExisted(req.body.invoice_id)
-    console.log(isInvoiceExisted);
-    const newInvoice = await InvoiceModel.create(req.body);
-    res.status(200).send(newInvoice)
+app.post('/', async (req, res) => {
+    try {
+        const newInvoice = await InvoiceModel.create(req.body);
+        res.status(200).send(newInvoice)
+    } catch (error) {
+        res.status(400).send("Something went wrong")
+    }
 });
 
-app.get('/:id', async (req, res, next) => {
-    const invoice = await InvoiceModel.findOne({
-        invoice_no: req.params.id
-    })
-    res.status(200).send(invoice)
+app.get('/:id', async (req, res) => {
+    try {
+        const invoice = await InvoiceModel.findOne({
+            invoice_no: req.params.id
+        })
+        res.status(200).send(invoice)
+    } catch (error) {
+        res.status(400).send("Something went wrong")
+    }
 });
 
-app.delete('/:id', async (req, res, next) => {
-    const invoice = await InvoiceModel.findOneAndDelete({
-        invoice_no: req.params.id
-    })
-    res.status(200).send(await InvoiceModel.find())
+app.delete('/:id', async (req, res) => {
+    try {
+        const invoice = await InvoiceModel.findOneAndDelete({
+            invoice_no: req.params.id
+        })
+        res.status(200).send(await InvoiceModel.find())
+    } catch (error) {
+        res.status(400).send("Something went wrong")
+    }
 });
 
-app.patch('/:id', async (req, res, next) => {
-    const invoice = await InvoiceModel.findOneAndUpdate({
-        invoice_no: req.params.id
-    }, {
-        ...req.body
-    })
-    res.status(200).send(await InvoiceModel.find())
+app.patch('/:id', async (req, res) => {
+    try {
+        const invoice = await InvoiceModel.findOneAndUpdate({
+            invoice_no: req.params.id
+        }, {
+            ...req.body
+        })
+        res.status(200).send(await InvoiceModel.find())
+    } catch (error) {
+        res.status(400).send("Something went wrong")
+    }
 });
 
 app.listen(port);

@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-
 // create a schema
 const InvoiceSchema = new Schema({
     invoice_no: String,

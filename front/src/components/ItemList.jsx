@@ -63,6 +63,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
             <input
               className="ml10"
               name="qty"
+              min={1}
               type="Number"
               placeholder="Item Qty"
               value={x.qty}
@@ -73,6 +74,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
             <input
               className="ml10"
               type="Number"
+              min={1}
               name="rate"
               placeholder="Item Tax Rate"
               value={x.rate}

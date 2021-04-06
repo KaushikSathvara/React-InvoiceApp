@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 
 export default function Datatable({ invoices, onDelete }) {
-  const history = useHistory()
+  const history = useHistory();
 
   function editInvoice(invoiceId) {
     history.push(`/invoice?invoice_no=${invoiceId}`);
@@ -20,7 +20,6 @@ export default function Datatable({ invoices, onDelete }) {
         <thead>
           <tr>
             <th>Invoice Number</th>
-            <th>Description</th>
             <th>Total</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -30,7 +29,6 @@ export default function Datatable({ invoices, onDelete }) {
           {invoices.map((invoice) => (
             <tr key={invoice.invoice_no}>
               <td>{invoice.invoice_no}</td>
-              <td>{"Dummy Disk"}</td>
               <td>{invoice.total}</td>
               <td>
                 <button
