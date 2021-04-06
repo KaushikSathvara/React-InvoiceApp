@@ -3,6 +3,7 @@ import ItemList from "./ItemList";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
+import Divider from "./Divider";
 
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
@@ -82,7 +83,7 @@ export default function InvoicePage(props) {
         )}
       </h3>
       <table className="table table-borderless">
-        <thead>
+        <thead className="thead-dark">
           <tr>
             <td>Sr No</td>
             <td>Item</td>
@@ -95,7 +96,10 @@ export default function InvoicePage(props) {
           <ItemList onRowUpdate={onRowUpdate} inputItems={InvoiceData.items} />
         </tbody>
       </table>
-      <h3>Total: {InvoiceData.total}</h3>
+      <Divider />
+      <div className="d-flex justify-content-end">
+        <h3 className="align-self-end">Total: {InvoiceData.total}</h3>
+      </div>
       <button className="btn btn-lg btn-info" onClick={generateInvoice}>
         {isNew ? "Generate Invoice" : "Update Invoice"}
       </button>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import rawData from "../data/invoices.json";
 import Datatable from "./Datatable";
 import axios from "axios";
 export default function LandingPage() {
@@ -8,14 +7,14 @@ export default function LandingPage() {
 
   useEffect(() => {
     axios.get("http://localhost:8080/").then(({ data }) => {
-      setInvoices(data)
-    })
+      setInvoices(data);
+    });
   }, []);
 
   function deleteInvoice(id) {
     axios.delete(`http://localhost:8080/${id}`).then(({ data }) => {
-      setInvoices(data)
-    })
+      setInvoices(data);
+    });
   }
 
   return (
