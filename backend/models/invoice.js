@@ -11,6 +11,7 @@ const InvoiceSchema = new Schema({
         description: String,
         item: String,
     }],
+    updatedAt: Date,
     total: Number
 });
 

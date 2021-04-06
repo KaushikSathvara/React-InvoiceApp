@@ -19,16 +19,22 @@ export default function Datatable({ invoices, onDelete }) {
           <tr>
             <th>#</th>
             <th>Invoice Number</th>
-            <th>Invoice Total</th>
+            <th>Last Updated</th>
+            <th>Invoice Total (in ₹)</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           {invoices.map((invoice, i) => (
-            <tr key={invoice.invoice_no}>
+            <tr key={i}>
               <td>{i + 1}</td>
               <td>{invoice.invoice_no}</td>
+              <td>
+                <span className="text-muted">
+                  {new Date(invoice.updatedAt).toLocaleString()}
+                </span>
+              </td>
               <td>{invoice.total}</td>
               <td>
                 <button

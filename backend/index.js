@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     try {
-        const newInvoice = await InvoiceModel.create(req.body);
+        const newInvoice = await InvoiceModel.create({ ...req.body, updatedAt: new Date() });
         res.status(200).send(newInvoice)
     } catch (error) {
         res.status(400).send("Something went wrong")
@@ -64,7 +64,8 @@ app.patch('/:id', async (req, res) => {
         const invoice = await InvoiceModel.findOneAndUpdate({
             invoice_no: req.params.id
         }, {
-            ...req.body
+            ...req.body,
+            updatedAt: new Date()
         })
         res.status(200).send(await InvoiceModel.find())
     } catch (error) {
