@@ -4,8 +4,10 @@ const cors = require("cors");
 const dotenv = require('dotenv');
 const { invoiceRouter } = require("./router/invoice");
 dotenv.config();
+
 const DB_URL = process.env.DB_URL
 
+// Connecting mongodb with DB URL
 mongoose.connect(DB_URL, { useNewUrlParser: true });
 
 const app = express();
