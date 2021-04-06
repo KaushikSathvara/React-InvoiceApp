@@ -3,6 +3,13 @@ import React, { useEffect, useState } from "react";
 export default function ItemList({ onRowUpdate, inputItems }) {
   const [inputList, setInputList] = useState([...inputItems]);
 
+  useEffect(() => {
+    setInputList([
+      ...inputItems,
+      { item: "", description: "", qty: 0, rate: 0 },
+    ]);
+  }, [inputItems]);
+
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;

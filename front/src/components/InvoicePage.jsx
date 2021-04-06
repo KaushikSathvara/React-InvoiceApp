@@ -7,9 +7,11 @@ import axios from "axios";
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
     invoice_no: uuidv4(),
-    items: [{}],
+    items: [],
     total: 0,
   });
+
+  const [FinalInvoiceData, setFinalInvoiceData] = useState({});
 
   const [isNew, setisNew] = useState(true);
   const histroy = useHistory();
@@ -21,21 +23,13 @@ export default function InvoicePage(props) {
 
   useEffect(() => {
     if (query.get("invoice_no")) {
+      setisNew(false);
       axios
         .get(`http://localhost:8080/${query.get("invoice_no")}`)
         .then(({ data }) => {
-          setisNew(false);
-
-          var _items = data.items.map((item) => ({
-            item: item.item,
-            description: item.description,
-            qty: item.qty,
-            rate: item.rate,
-          }));
-
           setInvoiceData({
             invoice_no: data.invoice_no,
-            items: _items,
+            items: data.items,
             total: data.total,
           });
         });
@@ -43,15 +37,18 @@ export default function InvoicePage(props) {
   }, []);
 
   async function generateInvoice() {
-    console.log(`Generating Invoice for ${JSON.stringify(InvoiceData)}`);
+    console.log(`Generating Invoice for ${JSON.stringify(FinalInvoiceData)}`);
     if (!isNew) {
       const res = await axios
-        .patch(`http://localhost:8080/${InvoiceData.invoice_no}`, InvoiceData)
+        .patch(
+          `http://localhost:8080/${FinalInvoiceData.invoice_no}`,
+          FinalInvoiceData
+        )
         .then((res) => {
           console.log(res);
         });
     } else {
-      const res = await axios.post("http://localhost:8080/", InvoiceData);
+      const res = await axios.post("http://localhost:8080/", FinalInvoiceData);
     }
     histroy.push("/");
   }
@@ -65,7 +62,8 @@ export default function InvoicePage(props) {
 
   function onRowUpdate(items) {
     var _total = calculateTotal(items);
-    setInvoiceData({ ...InvoiceData, items, total: _total });
+    // setInvoiceData({ ...InvoiceData, items, total: _total });
+    setFinalInvoiceData({ ...InvoiceData, items, total: _total });
   }
 
   return (
@@ -86,14 +84,7 @@ export default function InvoicePage(props) {
           </tr>
         </thead>
         <tbody>
-          {!isNew && InvoiceData.items.length > 0 ? (
-            <ItemList
-              onRowUpdate={onRowUpdate}
-              inputItems={[...InvoiceData.items]}
-            />
-          ) : (
-            <ItemList onRowUpdate={onRowUpdate} inputItems={[{}]} />
-          )}
+          <ItemList onRowUpdate={onRowUpdate} inputItems={InvoiceData.items} />
         </tbody>
       </table>
       <h3>Total: {InvoiceData.total}</h3>
