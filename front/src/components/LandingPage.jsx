@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import Datatable from "./Datatable";
 import axios from "axios";
 import Layout from "./Layout";
+import { SERVER_URL } from "../utils/common";
 export default function LandingPage() {
   const [Invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/").then(({ data }) => {
+    axios.get(SERVER_URL).then(({ data }) => {
       setInvoices(data);
     });
   }, []);
 
   function deleteInvoice(id) {
-    axios.delete(`http://localhost:8080/${id}`).then(({ data }) => {
+    axios.delete(`${SERVER_URL}${id}`).then(({ data }) => {
       setInvoices(data);
     });
   }

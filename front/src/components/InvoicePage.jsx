@@ -5,6 +5,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import Divider from "./Divider";
 import Layout from "./Layout";
+import { SERVER_URL } from "../utils/common";
 
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
@@ -26,15 +27,13 @@ export default function InvoicePage(props) {
   useEffect(() => {
     if (query.get("invoice_no")) {
       setisNew(false);
-      axios
-        .get(`http://localhost:8080/${query.get("invoice_no")}`)
-        .then(({ data }) => {
-          setInvoiceData({
-            invoice_no: data.invoice_no,
-            items: data.items,
-            total: data.total,
-          });
+      axios.get(`${SERVER_URL}${query.get("invoice_no")}`).then(({ data }) => {
+        setInvoiceData({
+          invoice_no: data.invoice_no,
+          items: data.items,
+          total: data.total,
         });
+      });
     }
   }, []);
 
@@ -44,7 +43,7 @@ export default function InvoicePage(props) {
       setisLoading(true);
       if (!isNew) {
         await axios
-          .patch(`http://localhost:8080/${FinalInvoiceData.invoice_no}`, {
+          .patch(`${SERVER_URL}${FinalInvoiceData.invoice_no}`, {
             ...FinalInvoiceData,
             items: Items,
           })
@@ -54,7 +53,7 @@ export default function InvoicePage(props) {
           });
       } else {
         await axios
-          .post("http://localhost:8080/", {
+          .post(SERVER_URL, {
             ...FinalInvoiceData,
             items: Items,
           })
