@@ -4,7 +4,7 @@ const cors = require("cors");
 var bodyParser = require('body-parser');
 const InvoiceModel = require("./models/invoice");
 
-const DB_URL = "mongodb+srv://kaushik:6xX2zkJdeBjyKQk@cluster0.4bpsk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const DB_URL = "mongodb+srv://kaushik:6xX2zkJdeBjyKQk@cluster0.4bpsk.mongodb.net/invoices?retryWrites=true&w=majority"
 
 mongoose.connect(DB_URL, { useNewUrlParser: true });
 
