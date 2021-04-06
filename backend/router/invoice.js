@@ -1,7 +1,7 @@
 const express = require('express')
 const InvoiceModel = require("../models/invoice");
-const invoiceRouter = express.Router();
 
+const invoiceRouter = express.Router();
 
 invoiceRouter.get('/', async (req, res) => {
     try {

@@ -27,6 +27,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
 
   // handle click event of the Add button
   const handleAddClick = () => {
+    // Adding blank item on add button click
     setInputList([
       ...inputList,
       { item: "", description: "", qty: 0, rate: 0 },
@@ -39,10 +40,10 @@ export default function ItemList({ onRowUpdate, inputItems }) {
 
   return (
     <>
-      {inputList.map((x, i) => (
+      {inputList.map((item, i) => (
         <tr
           key={i}
-          className={inputList.length - 1 === i ? "" : "table-active"}
+          className={inputList.length - 1 === i ? "" : "confirm-row"}
         >
           <td>{i + 1}</td>
           <td>
@@ -50,7 +51,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
               name="item"
               className="form-control"
               placeholder="Item Name"
-              value={x.item}
+              value={item.item}
               onChange={(e) => handleInputChange(e, i)}
             />
           </td>
@@ -59,7 +60,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
               className="form-control"
               name="description"
               placeholder="Item Description"
-              value={x.description}
+              value={item.description}
               onChange={(e) => handleInputChange(e, i)}
             />
           </td>
@@ -70,7 +71,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
               min={1}
               type="Number"
               placeholder="Item Qty"
-              value={x.qty}
+              value={item.qty}
               onChange={(e) => handleInputChange(e, i)}
             />
           </td>
@@ -81,33 +82,36 @@ export default function ItemList({ onRowUpdate, inputItems }) {
               min={1}
               name="rate"
               placeholder="Item Tax Rate"
-              value={x.rate}
+              value={item.rate}
               onChange={(e) => handleInputChange(e, i)}
             />
           </td>
-          <td>
-            {inputList.length > 1 ? (
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() => handleRemoveClick(i)}
-              >
-                Remove
+          <td colSpan={2}>
+            <div className='d-flex'>
+              {inputList.length > 1 ? (
+                <><button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleRemoveClick(i)}
+                >
+                  Remove
               </button>
-            ) : (
-              <>{"-"}</>
-            )}
+                </>
+              ) : (
+                <></>
+              )}
+              {inputList.length - 1 === i ? (
+                <button className="btn btn-info btn-sm ml-2" onClick={handleAddClick}>
+                  Add
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
           </td>
-          <td>
-            {inputList.length - 1 === i ? (
-              <button className="btn btn-info btn-sm" onClick={handleAddClick}>
-                Add
-              </button>
-            ) : (
-              <></>
-            )}
-          </td>
+
         </tr>
-      ))}
+      ))
+      }
     </>
   );
 }

@@ -73,11 +73,9 @@ export default function InvoicePage(props) {
 
   function onRowUpdate(items) {
     var _total = calculateTotal(items);
-    var _items = items.filter((item) => {
-      if (item.qty && item.item && item.rate && item.description) {
-        return item;
-      }
-    });
+    var _items = items.filter((item) =>
+      item.qty && item.item && item.rate && item.description ? item : undefined
+    );
     setItems(_items);
     setFinalInvoiceData({ ...InvoiceData, items, total: _total });
   }
@@ -90,7 +88,7 @@ export default function InvoicePage(props) {
         </h4>
         <h5 className="text-muted">{`Invoice ID: ${InvoiceData.invoice_no}`}</h5>
       </div>
-      <table className="table table-borderless">
+      <table className="table">
         <thead className="thead-light">
           <tr>
             <th>{"#"}</th>
@@ -98,8 +96,7 @@ export default function InvoicePage(props) {
             <th>{"Description"}</th>
             <th>{"Qty"}</th>
             <th>{"Rate (With Tax in ₹)"}</th>
-            <th>{"Remove"}</th>
-            <th>{"Add"}</th>
+            <th>{"Action"}</th>
           </tr>
         </thead>
         <tbody>
