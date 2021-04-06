@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require('body-parser');
 const InvoiceModel = require("./models/invoice");
-
-const DB_URL = "mongodb+srv://kaushik:6xX2zkJdeBjyKQk@cluster0.4bpsk.mongodb.net/invoices?retryWrites=true&w=majority"
+const dotenv = require('dotenv');
+dotenv.config();
+const DB_URL = process.env.DB_URL
 
 mongoose.connect(DB_URL, { useNewUrlParser: true });
 
