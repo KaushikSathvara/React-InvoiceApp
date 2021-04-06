@@ -5,7 +5,7 @@ export default function Datatable({ invoices, onDelete }) {
   const history = useHistory()
 
   function editInvoice(invoiceId) {
-    history.push(`/invoice?invoice_no=${invoiceId}`)
+    history.push(`/invoice?invoice_no=${invoiceId}`);
     console.log(`Edit ${invoiceId}`);
   }
 
