@@ -10,7 +10,7 @@ export default function InvoiceRouter() {
         <Route exact path="/">
           <LandingPage />
         </Route>
-        <Route path="/create">
+        <Route path="/invoice">
           <InvoicePage />
         </Route>
       </Switch>

@@ -1,13 +1,16 @@
 import React from "react";
+import { useHistory } from "react-router";
 
-export default function Datatable(props) {
-  const { invoices } = props;
+export default function Datatable({ invoices, onDelete }) {
+  const history = useHistory()
 
   function editInvoice(invoiceId) {
+    history.push(`/invoice?invoice_no=${invoiceId}`)
     console.log(`Edit ${invoiceId}`);
   }
 
   function deleteInvoice(invoiceId) {
+    onDelete(invoiceId);
     console.log(`Delete ${invoiceId}`);
   }
 
@@ -18,28 +21,21 @@ export default function Datatable(props) {
           <tr>
             <th>Invoice Number</th>
             <th>Description</th>
-            {/* <th>Item</th>
-            <th>Qty</th>
-            <th>Tax</th> */}
             <th>Total</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {invoices.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
+          {invoices.map((invoice) => (
+            <tr key={invoice.invoice_no}>
+              <td>{invoice.invoice_no}</td>
               <td>{"Dummy Disk"}</td>
-              {/* <td>{item.description}</td>
-              <td>{item.item}</td>
-              <td>{item.qty}</td>
-              <td>{item.tax}</td> */}
-              <td>{item.total}</td>
+              <td>{invoice.total}</td>
               <td>
                 <button
                   className="btn btn-sm btn-info"
-                  onClick={() => editInvoice(item.id)}
+                  onClick={() => editInvoice(invoice.invoice_no)}
                 >
                   Edit
                 </button>
@@ -47,7 +43,7 @@ export default function Datatable(props) {
               <td>
                 <button
                   className="btn btn-sm btn-danger"
-                  onClick={() => deleteInvoice(item.id)}
+                  onClick={() => deleteInvoice(invoice.invoice_no)}
                 >
                   Delete
                 </button>
