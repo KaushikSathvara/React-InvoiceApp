@@ -9,7 +9,7 @@ import { SERVER_URL } from "../utils/common";
 
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
-    invoice_no: uuidv4(),
+    invoice_no: "INV-" + uuidv4(),
     items: [],
     total: 0,
   });

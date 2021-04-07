@@ -1,6 +1,10 @@
 body{
   margin: auto;
 }
+hr{
+  background-color: "#f8f8f8";
+  height: 1;
+}
 .confirm-row{
   background-color: #dae0e5;
 }

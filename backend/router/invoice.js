@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const InvoiceModel = require("../models/invoice");
 
 const invoiceRouter = express.Router();
@@ -8,7 +8,7 @@ invoiceRouter.get('/', async (req, res) => {
         const invoices = await InvoiceModel.find()
         res.status(200).send(invoices)
     } catch (error) {
-        res.status(400).send("Something went wrong")
+        res.status(400).send("Something went wrong:", error)
     }
 });
 
@@ -17,7 +17,7 @@ invoiceRouter.post('/', async (req, res) => {
         const newInvoice = await InvoiceModel.create({ ...req.body, updatedAt: new Date() });
         res.status(200).send(newInvoice)
     } catch (error) {
-        res.status(400).send("Something went wrong")
+        res.status(400).send("Something went wrong:", error)
     }
 });
 
@@ -28,7 +28,7 @@ invoiceRouter.get('/:id', async (req, res) => {
         })
         res.status(200).send(invoice)
     } catch (error) {
-        res.status(400).send("Something went wrong")
+        res.status(500).send("Something went wrong :", error)
     }
 });
 
@@ -39,7 +39,7 @@ invoiceRouter.delete('/:id', async (req, res) => {
         })
         res.status(200).send(await InvoiceModel.find())
     } catch (error) {
-        res.status(400).send("Something went wrong")
+        res.status(500).send("Something went wrong :", error)
     }
 });
 
@@ -53,7 +53,7 @@ invoiceRouter.patch('/:id', async (req, res) => {
         })
         res.status(200).send(await InvoiceModel.find())
     } catch (error) {
-        res.status(400).send("Something went wrong")
+        res.status(500).send("Something went wrong :", error)
     }
 });
 
