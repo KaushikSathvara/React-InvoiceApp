@@ -1,5 +1,5 @@
 import React from "react";
-import Divider from "./Divider";
+import Divider from "../components/Divider";
 
 export default function Layout(props) {
   return (
@@ -8,7 +8,9 @@ export default function Layout(props) {
         <h2 className="display-4 text-muted mb-5">Invoice Generator</h2>
       </div>
       <Divider />
-      {props.children}
+      <div className="d-flex flex-column justify-content-center">
+        {props.children}
+      </div>
     </>
   );
 }
