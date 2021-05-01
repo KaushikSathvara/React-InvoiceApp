@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
+import InvoiceStatus from "./InvoiceStatus";
 
 export default function Datatable({ invoices, onDelete }) {
   const history = useHistory();
@@ -21,6 +22,7 @@ export default function Datatable({ invoices, onDelete }) {
             <th>Invoice Number</th>
             <th>Last Updated</th>
             <th>Invoice Total (in ₹)</th>
+            <th>Status</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -36,6 +38,7 @@ export default function Datatable({ invoices, onDelete }) {
                 </span>
               </td>
               <td>{invoice.total}</td>
+              <td><InvoiceStatus total={invoice.total} /> </td>
               <td>
                 <button
                   className="btn btn-sm btn-info"
