@@ -4,6 +4,7 @@ import Datatable from "./Datatable";
 import axios from "axios";
 import Layout from "./Layout";
 import { SERVER_URL } from "../utils/common";
+import EmptyList from "./EmptyList";
 export default function LandingPage() {
   const [Invoices, setInvoices] = useState([]);
 
@@ -40,10 +41,9 @@ export default function LandingPage() {
         <Datatable invoices={Invoices} onDelete={deleteInvoice} />
       ) : (
         <div className="flex-column d-flex justify-content-center align-items-center">
-          {"No invoices found 😔"}
-          <br />
+          <EmptyList text={"No invoices found"} />
           <Link
-            className="mt-2 justify-content-center align-self-center"
+            className="mt-3 justify-content-center align-self-center"
             to="/invoice"
           >
             {"+ Create A new Invoice"}

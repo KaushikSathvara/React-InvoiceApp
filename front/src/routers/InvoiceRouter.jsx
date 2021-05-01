@@ -7,12 +7,8 @@ export default function InvoiceRouter() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/invoice">
-          <InvoicePage />
-        </Route>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/invoice" component={InvoicePage} />
       </Switch>
     </Router>
   );
