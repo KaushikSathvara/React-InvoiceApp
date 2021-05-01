@@ -6,7 +6,6 @@ import axios from "axios";
 import Divider from "./Divider";
 import Layout from "../layouts/Layout";
 import { SERVER_URL } from "../utils/common";
-
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
     invoice_no: "INV-" + uuidv4(),
@@ -28,6 +27,7 @@ export default function InvoicePage(props) {
     if (query.get("invoice_no")) {
       setisNew(false);
       axios.get(`${SERVER_URL}${query.get("invoice_no")}`).then(({ data }) => {
+        console.log("data", data);
         setInvoiceData({
           invoice_no: data.invoice_no,
           items: data.items,
@@ -109,7 +109,7 @@ export default function InvoicePage(props) {
       <Divider />
       <div className="d-flex justify-content-end flex-column mt-5">
         <h3 className="align-self-end font-weight-bold">
-          Total ₹: {FinalInvoiceData.total}
+          {`Total ₹:  ${InvoiceData.total}`}
         </h3>
         <button
           className="align-self-end btn btn-info"
@@ -119,9 +119,7 @@ export default function InvoicePage(props) {
           {isNew ? "Generate Invoice" : "Update Invoice"}
         </button>
       </div>
-      <div className="mt-4">
-        <Link to="/">{"Back to Dashboard"}</Link>
-      </div>
+      <Link to="/" className="mt-4">{"Back to Dashboard"}</Link>
     </Layout>
   );
 }

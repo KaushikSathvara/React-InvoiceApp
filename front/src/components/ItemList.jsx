@@ -100,7 +100,7 @@ export default function ItemList({ onRowUpdate, inputItems }) {
                 <></>
               )}
               {inputList.length - 1 === i ? (
-                <button className="btn btn-info btn-sm ml-2" onClick={handleAddClick}>
+                <button className="btn btn-info btn-sm ms-2" onClick={handleAddClick}>
                   Add
                 </button>
               ) : (

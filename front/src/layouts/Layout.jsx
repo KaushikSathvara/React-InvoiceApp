@@ -1,6 +1,7 @@
 import React from "react";
 import Divider from "../components/Divider";
-
+// import { BG_PRIMARY } from "../utils/common";
+import BG_PRIMARY from "../assets/images/bg_primary.jpg";
 export default function Layout(props) {
   return (
     <>

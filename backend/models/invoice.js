@@ -1,18 +1,25 @@
 const mongoose = require('mongoose');
+const ItemModel = require('./item');
 
 const { Schema } = mongoose;
 
 // create a schema
 const InvoiceSchema = new Schema({
-    invoice_no: String,
-    items: [{
-        qty: Number,
-        rate: Number,
-        description: String,
-        item: String,
-    }],
+    invoice_no: {
+        unique: true,
+        type: String
+    },
+    items: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
     updatedAt: Date,
-    total: Number
+    total: Number,
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now(),
+    }
 });
 
 // create the model
