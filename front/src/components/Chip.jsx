@@ -6,7 +6,7 @@ export default function InvoicePill({ text }) {
     case INVOICE_STATUS_OVERDUE:
       return <span className="badge bg-danger rounded-pill">{INVOICE_STATUS_OVERDUE}</span>
     case INVOICE_STATUS_PAID:
-      return <span className="badge rounded-pill bg-primary">{INVOICE_STATUS_PAID}</span>
+      return <span className="badge rounded-pill bg-success">{INVOICE_STATUS_PAID}</span>
     default:
       return <span className="badge">{"-"}</span>
   }

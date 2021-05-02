@@ -57,7 +57,6 @@ invoiceRouter.delete('/:id', async (req, res) => {
 });
 
 invoiceRouter.patch('/:id', async (req, res) => {
-    console.log(req.body);
     try {
         const invoice = await InvoiceModel.findOneAndUpdate({
             invoice_no: req.params.id

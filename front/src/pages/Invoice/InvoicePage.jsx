@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import ItemList from "./ItemList";
 import { v4 as uuidv4 } from "uuid";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Divider from "../../components/Divider";
 import Layout from "../../layouts/Layout";
 import { SERVER_URL } from "../../utils/common";
+import { useHistory, useLocation } from 'react-router'
+import qs from "querystring";
 
-export default function InvoicePage(props) {
+const table_columns = [
+  { name: "#" },
+  { name: "Name" },
+  { name: "Description" },
+  { name: "Qty" },
+  { name: "Rate (With Tax in ₹)" },
+  { name: "Action" },
+]
+
+
+export default function InvoicePage() {
   const [InvoiceData, setInvoiceData] = useState({
     invoice_no: "INV-" + uuidv4(),
     items: [],
@@ -16,19 +28,14 @@ export default function InvoicePage(props) {
   const [isLoading, setisLoading] = useState(false);
   const [Items, setItems] = useState([]);
   const [FinalInvoiceData, setFinalInvoiceData] = useState({});
-
   const [isNew, setisNew] = useState(true);
-  const histroy = useHistory();
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-  const query = useQuery();
+  const history = useHistory()
 
   useEffect(() => {
-    if (query.get("invoice_no")) {
+    var invoice_no = qs.parse(history.location.search)['?invoice_no']
+    if (invoice_no) {
       setisNew(false);
-      axios.get(`${SERVER_URL}${query.get("invoice_no")}`).then(({ data }) => {
-        console.log("data", data);
+      axios.get(`${SERVER_URL}${invoice_no}`).then(({ data }) => {
         setInvoiceData({
           invoice_no: data.invoice_no,
           items: data.items,
@@ -50,7 +57,7 @@ export default function InvoicePage(props) {
           })
           .then((res) => {
             setisLoading(false);
-            histroy.push("/");
+            history.push("/");
           });
       } else {
         await axios
@@ -60,7 +67,7 @@ export default function InvoicePage(props) {
           })
           .then((_) => {
             setisLoading(false);
-            histroy.push("/");
+            history.push("/");
           });
       }
     }
@@ -92,12 +99,11 @@ export default function InvoicePage(props) {
       <table className="table">
         <thead className="thead-light">
           <tr>
-            <th>{"#"}</th>
-            <th>{"Name"}</th>
-            <th>{"Description"}</th>
-            <th>{"Qty"}</th>
-            <th>{"Rate (With Tax in ₹)"}</th>
-            <th>{"Action"}</th>
+            {
+              table_columns.map((column, index) => (
+                <th key={index}>{column.name}</th>
+              ))
+            }
           </tr>
         </thead>
         <tbody>

@@ -37,11 +37,11 @@ export default function Datatable({ invoices, onDelete }) {
                   {new Date(invoice.updatedAt).toLocaleString()}
                 </span>
               </td>
-              <td>{invoice.total}</td>
+              <td>{`₹ ${invoice.total}`}</td>
               <td><InvoiceStatus total={invoice.total} /> </td>
               <td>
                 <button
-                  className="btn btn-sm btn-info"
+                  className="btn btn-sm btn-primary"
                   onClick={() => editInvoice(invoice.invoice_no)}
                 >
                   Edit

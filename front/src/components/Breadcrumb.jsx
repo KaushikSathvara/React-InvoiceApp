@@ -5,7 +5,6 @@ export default function Breadcrumb() {
     const [MyList, setMyList] = useState([])
     const history = useHistory()
     useEffect(() => {
-        console.log(history.location);
         var list_items = history.location.pathname.split("/")
         var my_list_items = []
         list_items.map((item, idx) => {
@@ -23,12 +22,6 @@ export default function Breadcrumb() {
         })
         setMyList([...MyList, ...my_list_items])
     }, [history])
-
-    useEffect(() => {
-        // var last_item = MyList[MyList.length - 1]
-        console.log(MyList)
-
-    }, [MyList])
 
     return (
         <nav aria-label="breadcrumb">
