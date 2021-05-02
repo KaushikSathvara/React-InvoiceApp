@@ -6,6 +6,7 @@ import axios from "axios";
 import Divider from "../../components/Divider";
 import Layout from "../../layouts/Layout";
 import { SERVER_URL } from "../../utils/common";
+
 export default function InvoicePage(props) {
   const [InvoiceData, setInvoiceData] = useState({
     invoice_no: "INV-" + uuidv4(),
