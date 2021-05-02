@@ -1,14 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import LandingPage from "../components/LandingPage";
-import InvoicePage from "../components/InvoicePage";
-
+import routes from "../configs/config";
 export default function InvoiceRouter() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route path="/invoice" component={InvoicePage} />
+        {
+          routes.map(({ path, component }, key) => (
+            <Route exact path={path} key={key} component={component} />
+          ))
+        }
       </Switch>
     </Router>
   );

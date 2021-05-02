@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
-import InvoiceStatus from "./InvoiceStatus";
+import InvoiceStatus from "../Invoice/InvoiceStatus";
 
 export default function Datatable({ invoices, onDelete }) {
   const history = useHistory();

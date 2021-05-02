@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Datatable from "./Datatable";
 import axios from "axios";
-import Layout from "../layouts/Layout";
-import { SERVER_URL } from "../utils/common";
-import EmptyList from "./EmptyList";
-import Spinner from "./Spinner";
-export default function LandingPage() {
+import Layout from "../../layouts/Layout";
+import { SERVER_URL } from "../../utils/common";
+import EmptyList from "../../components/EmptyList";
+import Spinner from "../../components/Spinner";
+export default function LandingPage(props) {
   const [Invoices, setInvoices] = useState([]);
   const [spinner, setSpinner] = useState(false)
 
